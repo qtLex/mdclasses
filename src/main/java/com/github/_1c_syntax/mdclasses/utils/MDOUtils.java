@@ -288,7 +288,7 @@ public class MDOUtils {
   }
 
   private void updateMDOForms(ConfigurationSource configurationSource, MDObjectBase mdo, Path folder) {
-    if (!mdo.getType().isMayHaveForm() || folder == null) {
+    if (folder == null) {
       return;
     }
     var formFolder = Paths.get(folder.toString(), mdo.getName(), MDOType.FORM.getGroupName());

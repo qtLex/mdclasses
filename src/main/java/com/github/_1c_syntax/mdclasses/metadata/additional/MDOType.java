@@ -1,85 +1,79 @@
 package com.github._1c_syntax.mdclasses.metadata.additional;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public enum MDOType {
-  ACCOUNTING_REGISTER("AccountingRegister", "AccountingRegisters", true, true),
-  ACCUMULATION_REGISTER("AccumulationRegister", "AccumulationRegisters", true, true),
-  BUSINESS_PROCESS("BusinessProcess", "BusinessProcesses", true, true),
-  CALCULATION_REGISTER("CalculationRegister", "CalculationRegisters", true, true),
-  CATALOG("Catalog", "Catalogs", true, true),
-  CHART_OF_ACCOUNTS("ChartOfAccounts", "ChartsOfAccounts", true, true),
-  CHART_OF_CALCULATION_TYPES("ChartOfCalculationTypes", "ChartsOfCalculationTypes", true, true),
-  CHART_OF_CHARACTERISTIC_TYPES("ChartOfCharacteristicTypes", "ChartsOfCharacteristicTypes", true, true),
-  COMMAND_GROUP("CommandGroup", "CommandGroups", false, false),
-  COMMON_ATTRIBUTE("CommonAttribute", "CommonAttributes", false, false),
-  COMMON_COMMAND("CommonCommand", "CommonCommands", false, false),
-  COMMON_FORM("CommonForm", "CommonForms", false, false),
-  COMMON_MODULE("CommonModule", "CommonModules", false, false),
-  COMMON_PICTURE("CommonPicture", "CommonPictures", false, false),
-  COMMON_TEMPLATE("CommonTemplate", "CommonTemplates", false, false),
-  CONFIGURATION("Configuration", "", false, false),
-  CONSTANT("Constant", "Constants", false, false),
-  DATA_PROCESSOR("DataProcessor", "DataProcessors", true, true),
-  DEFINED_TYPE("DefinedType", "DefinedTypes", false, false),
-  DOCUMENT_JOURNAL("DocumentJournal", "DocumentJournals", true, true),
-  DOCUMENT_NUMERATOR("DocumentNumerator", "DocumentNumerators", false, false),
-  DOCUMENT("Document", "Documents", true, true),
-  ENUM("Enum", "Enums", true, true),
-  EVENT_SUBSCRIPTION("EventSubscription", "EventSubscriptions", false, false),
-  EXCHANGE_PLAN("ExchangePlan", "ExchangePlans", true, true),
-  FILTER_CRITERION("FilterCriterion", "FilterCriteria", true, true),
-  FUNCTIONAL_OPTION("FunctionalOption", "FunctionalOptions", false, false),
-  FUNCTIONAL_OPTIONS_PARAMETER("FunctionalOptionsParameter", "FunctionalOptionsParameters", false, false),
-  HTTP_SERVICE("HTTPService", "HTTPServices", false, false),
-  INFORMATION_REGISTER("InformationRegister", "InformationRegisters", true, true),
-  INTERFACE("Interface", "Interfaces", true, true),
-  LANGUAGE("Language", "Languages", false, false),
-  REPORT("Report", "Reports", true, true),
-  ROLE("Role", "Roles", false, false),
-  SCHEDULED_JOB("ScheduledJob", "ScheduledJobs", false, false),
-  SEQUENCE("Sequence", "Sequences", true, true),
-  SESSION_PARAMETER("SessionParameter", "SessionParameters", false, false),
-  SETTINGS_STORAGE("SettingsStorage", "SettingsStorages", true, true),
-  STYLE_ITEM("StyleItem", "StyleItems", false, false),
-  STYLE("Style", "Styles", false, false),
-  SUBSYSTEM("Subsystem", "Subsystems", false, false),
-  TASK("Task", "Tasks", true, true),
-  WEB_SERVICE("WebService", "WebServices", false, false),
-  WS_REFERENCE("WSReference", "WSReferences", false, false),
-  XDTO_PACKAGE("XDTOPackage", "XDTOPackages", false, false),
+  ACCOUNTING_REGISTER("AccountingRegister", "AccountingRegisters", true),
+  ACCUMULATION_REGISTER("AccumulationRegister", "AccumulationRegisters", true),
+  BUSINESS_PROCESS("BusinessProcess", "BusinessProcesses", true),
+  CALCULATION_REGISTER("CalculationRegister", "CalculationRegisters", true),
+  CATALOG("Catalog", "Catalogs", true),
+  CHART_OF_ACCOUNTS("ChartOfAccounts", "ChartsOfAccounts", true),
+  CHART_OF_CALCULATION_TYPES("ChartOfCalculationTypes", "ChartsOfCalculationTypes", true),
+  CHART_OF_CHARACTERISTIC_TYPES("ChartOfCharacteristicTypes", "ChartsOfCharacteristicTypes", true),
+  COMMAND_GROUP("CommandGroup", "CommandGroups", false),
+  COMMON_ATTRIBUTE("CommonAttribute", "CommonAttributes", false),
+  COMMON_COMMAND("CommonCommand", "CommonCommands", false),
+  COMMON_FORM("CommonForm", "CommonForms", false),
+  COMMON_MODULE("CommonModule", "CommonModules", false),
+  COMMON_PICTURE("CommonPicture", "CommonPictures", false),
+  COMMON_TEMPLATE("CommonTemplate", "CommonTemplates", false),
+  CONFIGURATION("Configuration", "", false),
+  CONSTANT("Constant", "Constants", false),
+  DATA_PROCESSOR("DataProcessor", "DataProcessors", true),
+  DEFINED_TYPE("DefinedType", "DefinedTypes", false),
+  DOCUMENT_JOURNAL("DocumentJournal", "DocumentJournals", true),
+  DOCUMENT_NUMERATOR("DocumentNumerator", "DocumentNumerators", false),
+  DOCUMENT("Document", "Documents", true),
+  ENUM("Enum", "Enums", true),
+  EVENT_SUBSCRIPTION("EventSubscription", "EventSubscriptions", false),
+  EXCHANGE_PLAN("ExchangePlan", "ExchangePlans", true),
+  FILTER_CRITERION("FilterCriterion", "FilterCriteria", true),
+  FUNCTIONAL_OPTION("FunctionalOption", "FunctionalOptions", false),
+  FUNCTIONAL_OPTIONS_PARAMETER("FunctionalOptionsParameter", "FunctionalOptionsParameters", false),
+  HTTP_SERVICE("HTTPService", "HTTPServices", false),
+  INFORMATION_REGISTER("InformationRegister", "InformationRegisters", true),
+  INTERFACE("Interface", "Interfaces", true),
+  LANGUAGE("Language", "Languages", false),
+  REPORT("Report", "Reports", true),
+  ROLE("Role", "Roles", false),
+  SCHEDULED_JOB("ScheduledJob", "ScheduledJobs", false),
+  SEQUENCE("Sequence", "Sequences", true),
+  SESSION_PARAMETER("SessionParameter", "SessionParameters", false),
+  SETTINGS_STORAGE("SettingsStorage", "SettingsStorages", true),
+  STYLE_ITEM("StyleItem", "StyleItems", false),
+  STYLE("Style", "Styles", false),
+  SUBSYSTEM("Subsystem", "Subsystems", false),
+  TASK("Task", "Tasks", true),
+  WEB_SERVICE("WebService", "WebServices", false),
+  WS_REFERENCE("WSReference", "WSReferences", false),
+  XDTO_PACKAGE("XDTOPackage", "XDTOPackages", false),
 
-  FORM("Form", "Forms", false, false)
-
-  ;
+  FORM("Form", "Forms", false);
 
   private String shortClassName;
   private String groupName;
-  private boolean mayHaveForm;
   private boolean mayHaveCommand;
 
-  MDOType(String shortName, String groupName, boolean mayHaveForm, boolean mayHaveCommand) {
+  MDOType(String shortName, String groupName, boolean mayHaveCommand) {
     this.shortClassName = shortName;
     this.groupName = groupName;
-    this.mayHaveForm = mayHaveForm;
     this.mayHaveCommand = mayHaveCommand;
   }
 
   public String getShortClassName() {
     if (this == CONFIGURATION
-        || this == ENUM
-        || this == INTERFACE) {
+      || this == ENUM
+      || this == INTERFACE) {
       return "MDO" + shortClassName;
     }
     return shortClassName;
   }
 
   public static List<MDOType> values(boolean withoutChildren) {
-    if(withoutChildren) {
+    if (withoutChildren) {
       return Arrays.stream(values()).filter(mdoType -> mdoType != FORM).collect(Collectors.toList());
     }
     return Arrays.asList(values());
@@ -87,10 +81,6 @@ public enum MDOType {
 
   public String getGroupName() {
     return groupName;
-  }
-
-  public boolean isMayHaveForm() {
-    return mayHaveForm;
   }
 
   public boolean isMayHaveCommand() {
