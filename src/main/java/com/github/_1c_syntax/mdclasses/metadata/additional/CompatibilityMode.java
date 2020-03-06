@@ -28,7 +28,6 @@ public class CompatibilityMode {
 
     String[] array = newValue.split("([_.])");
     setVersionComponents(Integer.parseInt(array[1]), Integer.parseInt(array[2]));
-
   }
 
   public CompatibilityMode(int minor, int version) {
@@ -36,28 +35,19 @@ public class CompatibilityMode {
   }
 
   public static int compareTo(CompatibilityMode versionA, CompatibilityMode versionB) {
-
-    // TODO: переделать в цикл
     if (versionA.major == versionB.major) {
       if (versionA.minor == versionB.minor) {
-        if (versionA.version == versionB.version) {
+        if (versionA.version != versionB.version) {
           return 0;
-        } else if (versionA.version >= versionB.version) {
-          return -1;
         } else {
-          return 1;
+          return compareToPart(versionA.version, versionB.version);
         }
-      } else if (versionA.minor >= versionB.minor) {
-        return -1;
       } else {
-        return 1;
+        return compareToPart(versionA.minor, versionB.minor);
       }
-    } else if (versionA.major >= versionB.major) {
-      return -1;
     } else {
-      return 1;
+      return compareToPart(versionA.major, versionB.major);
     }
-
   }
 
   private void setVersionComponents(int minor, int version) {
@@ -65,4 +55,7 @@ public class CompatibilityMode {
     this.version = version;
   }
 
+  private static int compareToPart(int left, int right) {
+    return left > right ? -1 : 1;
+  }
 }
