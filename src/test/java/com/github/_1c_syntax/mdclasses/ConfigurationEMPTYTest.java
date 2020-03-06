@@ -4,7 +4,7 @@ import com.github._1c_syntax.mdclasses.metadata.Configuration;
 import com.github._1c_syntax.mdclasses.metadata.additional.ConfigurationSource;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.ModuleType;
-import com.github._1c_syntax.mdclasses.metadata.utils.Common;
+import com.github._1c_syntax.mdclasses.utils.Common;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

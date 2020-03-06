@@ -1,10 +1,11 @@
-package com.github._1c_syntax.mdclasses.metadata.utils;
+package com.github._1c_syntax.mdclasses.utils;
 
 import com.github._1c_syntax.mdclasses.mdo.MDObjectBase;
 import com.github._1c_syntax.mdclasses.metadata.Configuration;
 import com.github._1c_syntax.mdclasses.metadata.SupportConfiguration;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.ModuleType;
+import com.github._1c_syntax.mdclasses.metadata.additional.ParseSupportData;
 import com.github._1c_syntax.mdclasses.metadata.additional.SupportVariant;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

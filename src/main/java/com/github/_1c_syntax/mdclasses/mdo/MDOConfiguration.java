@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Map;
 
-import static com.github._1c_syntax.mdclasses.metadata.utils.MapExtension.getOrEmptyString;
+import static com.github._1c_syntax.mdclasses.utils.MapExtension.getOrEmptyString;
 
 @Value
 @EqualsAndHashCode(callSuper = true)

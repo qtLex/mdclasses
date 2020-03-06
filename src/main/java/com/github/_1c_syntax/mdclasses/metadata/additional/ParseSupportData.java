@@ -1,4 +1,4 @@
-package com.github._1c_syntax.mdclasses.metadata.utils;
+package com.github._1c_syntax.mdclasses.metadata.additional;
 
 import com.github._1c_syntax.mdclasses.metadata.SupportConfiguration;
 import com.github._1c_syntax.mdclasses.metadata.additional.SupportVariant;

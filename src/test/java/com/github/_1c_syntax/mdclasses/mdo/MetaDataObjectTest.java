@@ -2,7 +2,7 @@ package com.github._1c_syntax.mdclasses.mdo;
 
 import com.github._1c_syntax.mdclasses.metadata.additional.ConfigurationSource;
 import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
-import com.github._1c_syntax.mdclasses.metadata.utils.MDOUtils;
+import com.github._1c_syntax.mdclasses.utils.MDOUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
