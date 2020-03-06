@@ -20,10 +20,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,224 +29,6 @@ import java.util.stream.Stream;
 @Slf4j
 @UtilityClass
 public class MDOUtils {
-
-  private static final Map<MDOType, Set<ModuleType>> MODULE_TYPES_FOR_MDO_TYPES = moduleTypesForMDOTypes();
-  private static final String FILE_SEPARATOR = System.getProperty("file.separator");
-
-  /**
-   * Получает каталог типа объекта метаданных для EDT формата относительно корня проекта
-   */
-  private static Path getMDOTypeFolderPathEDT(Path rootPath, MDOType type) {
-    return Paths.get(rootPath.toString(), "src", type.getGroupName());
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных для EDT формата относительно корня проекта
-   * по пути MDO файла
-   */
-  private static Path getMDOTypeFolderPathByMDOPathEDT(Path mdoPath) {
-    return Paths.get(FilenameUtils.getFullPathNoEndSeparator(
-      FilenameUtils.getFullPathNoEndSeparator(mdoPath.toString())));
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных для EDT формата относительно корня проекта
-   */
-  private static Path getMDOPathEDT(Path rootPath, MDOType type, String name) {
-    return getMDOPathEDT(getMDOTypeFolderPathEDT(rootPath, type), name);
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных для EDT формата относительно произвольного каталога
-   * Используется для получения дочерних метаданных
-   */
-  private static Path getMDOPathEDT(Path folder, String name) {
-    return Paths.get(folder.toString(), name, name + "." + Common.EXTENSION_MDO);
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных для EDT формата относительно корня проекта, по имени
-   * и типу объекта метаднных и типу модуля
-   */
-  private static Path getModulePathEDT(Path rootPath, MDOType type, String name, ModuleType moduleType) {
-    return getModulePathEDT(getMDOTypeFolderPathEDT(rootPath, type), name, moduleType);
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных для EDT формата относительно произвольного каталога, по имени
-   * объекта метаднных и типу модуля
-   */
-  private static Path getModulePathEDT(Path folder, String name, ModuleType moduleType) {
-    return Paths.get(folder.toString(), name, moduleType.getFileName());
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных для формата конфигуратора относительно корня проекта
-   */
-  private static Path getMDOTypeFolderPathDesigner(Path rootPath, MDOType type) {
-    return Paths.get(rootPath.toString(), type.getGroupName());
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных для формата конфигуратора относительно корня проекта
-   * по пути MDO файла
-   */
-  private static Path getMDOTypeFolderPathByMDOPathDesigner(Path mdoPath) {
-    return Paths.get(FilenameUtils.getFullPathNoEndSeparator(mdoPath.toString()));
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных для формата конфигуратора относительно корня проекта
-   */
-  private static Path getMDOPathDesigner(Path rootPath, MDOType type, String name) {
-    return getMDOPathDesigner(getMDOTypeFolderPathDesigner(rootPath, type), name);
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных для формата конфигуратора относительно произвольного каталога
-   * Используется для получения дочерних метаданных
-   */
-  private static Path getMDOPathDesigner(Path folder, String name) {
-    return Paths.get(folder.toString(), name + "." + Common.EXTENSION_XML);
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных для  формата конфигуратора относительно корня проекта, по имени
-   * и типу объекта метаднных и типу модуля
-   */
-  private static Path getModulePathDesigner(Path rootPath, MDOType type, String name, ModuleType moduleType) {
-    return getModulePathDesigner(getMDOTypeFolderPathDesigner(rootPath, type), name, moduleType);
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных для формата конфигуратора относительно произвольного каталога, по имени
-   * объекта метаднных и типу модуля
-   */
-  private static Path getModulePathDesigner(Path folder, String name, ModuleType moduleType) {
-    var subdirectory = "Ext";
-    if (moduleType == ModuleType.FormModule) {
-      subdirectory += FILE_SEPARATOR + "Form";
-    }
-
-    if (!MODULE_TYPES_FOR_MDO_TYPES.get(MDOType.CONFIGURATION).contains(moduleType)) {
-      subdirectory = name + FILE_SEPARATOR + subdirectory;
-    }
-
-    return Paths.get(folder.toString(), subdirectory, moduleType.getFileName());
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных относительно корня проекта с учетом указанном типа исходников
-   */
-  public static Path getMDOTypeFolder(ConfigurationSource configurationSource, Path rootPath, MDOType type) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getMDOTypeFolderPathEDT(rootPath, type);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getMDOTypeFolderPathDesigner(rootPath, type);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных относительно корня проекта с учетом указанном типа исходников
-   * по описанию объекта метаданныъ
-   */
-  public static Path getMDOTypeFolderByMDOPath(ConfigurationSource configurationSource, Path mdoPath) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getMDOTypeFolderPathByMDOPathEDT(mdoPath);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getMDOTypeFolderPathByMDOPathDesigner(mdoPath);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Получает каталог типа объекта метаданных относительно корня проекта
-   */
-  public static Path getMDOTypeFolder(Path rootPath, MDOType type) {
-    return getMDOTypeFolder(getConfigurationSourceByPath(rootPath), rootPath, type);
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных относительно корня проекта с учетом указанном типа исходников
-   */
-  public static Path getMDOPath(ConfigurationSource configurationSource, Path rootPath, MDOType type, String name) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getMDOPathEDT(rootPath, type, name);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getMDOPathDesigner(rootPath, type, name);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Получает путь к MDO файлу объекта метаданных относительно корня проекта
-   */
-  public static Path getMDOPath(ConfigurationSource configurationSource, Path folder, String name) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getMDOPathEDT(folder, name);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getMDOPathDesigner(folder, name);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных относительно корня проекта, по имени и типу объекта метаднных
-   * и типу модуля с учетом указанном типа исходников
-   */
-  public static Path getModulePath(ConfigurationSource configurationSource,
-                                   Path rootPath,
-                                   MDOType type,
-                                   String name,
-                                   ModuleType moduleType) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getModulePathEDT(rootPath, type, name, moduleType);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getModulePathDesigner(rootPath, type, name, moduleType);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Получает путь к файлу-модулю объекта метаданных относительно корня проекта, по имени объекта метаднных
-   * и типу модуля с учетом указанном типа исходников
-   */
-  public static Path getModulePath(ConfigurationSource configurationSource,
-                                   Path folder,
-                                   String name,
-                                   ModuleType moduleType) {
-    if (configurationSource == ConfigurationSource.EDT) {
-      return getModulePathEDT(folder, name, moduleType);
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return getModulePathDesigner(folder, name, moduleType);
-    } else {
-      return null;
-    }
-  }
-
-  /**
-   * Расширение MDO файла с учетом типа исходников
-   */
-  public static String mdoExtension(ConfigurationSource configurationSource, boolean withDot) {
-    String dot = ".";
-    if (!withDot) {
-      dot = "";
-    }
-
-    if (configurationSource == ConfigurationSource.EDT) {
-      return dot + Common.EXTENSION_MDO;
-    } else if (configurationSource == ConfigurationSource.DESIGNER) {
-      return dot + Common.EXTENSION_XML;
-    } else {
-      return "";
-    }
-  }
 
   /**
    * Определяет тип исходников по корню проекта
@@ -285,7 +65,7 @@ public class MDOUtils {
                                          Path rootPath,
                                          MDOType type,
                                          String name) {
-    Path mdoPath = getMDOPath(configurationSource, rootPath, type, name);
+    Path mdoPath = MDOPathUtils.getMDOPath(configurationSource, rootPath, type, name);
     if (mdoPath == null || !mdoPath.toFile().exists()) {
       return null;
     }
@@ -322,7 +102,7 @@ public class MDOUtils {
     }
 
     if (mdo != null) {
-      var mdoFolder = getMDOTypeFolderByMDOPath(configurationSource, mdoPath);
+      var mdoFolder = MDOPathUtils.getMDOTypeFolderByMDOPath(configurationSource, mdoPath);
       mdo.setMdoURI(mdoPath.toUri());
       mdo.setModulesByType(getModuleTypesByMDOPath(
         configurationSource,
@@ -343,10 +123,10 @@ public class MDOUtils {
     Map<URI, ModuleType> modulesByType = new HashMap<>();
     var mdoName = FilenameUtils.getBaseName(mdoPath.toString());
 
-    var moduleTypes = MODULE_TYPES_FOR_MDO_TYPES.getOrDefault(mdoType, Collections.emptySet());
+    var moduleTypes = Common.MODULE_TYPES_FOR_MDO_TYPES.getOrDefault(mdoType, Collections.emptySet());
     if (!moduleTypes.isEmpty()) {
       moduleTypes.forEach(moduleType -> {
-        var modulePath = getModulePath(configurationSource, folder, mdoName, moduleType);
+        var modulePath = MDOPathUtils.getModulePath(configurationSource, folder, mdoName, moduleType);
         if (modulePath != null && modulePath.toFile().exists()) {
           modulesByType.put(modulePath.toUri(), moduleType);
         }
@@ -375,7 +155,7 @@ public class MDOUtils {
     Map<URI, ModuleType> modulesByType = new HashMap<>();
 
     for (MDOType mdoType : MDOType.values()) {
-      var folder = getMDOTypeFolder(configurationSource, rootPath, mdoType);
+      var folder = MDOPathUtils.getMDOTypeFolder(configurationSource, rootPath, mdoType);
       if (folder == null || !folder.toFile().exists()) {
         continue;
       }
@@ -411,7 +191,7 @@ public class MDOUtils {
           .filter((Path f) -> Files.isDirectory(f))
           .forEach(mdoPath -> {
             var name = FilenameUtils.getBaseName(mdoPath.toString());
-            var modulePath = getModulePath(configurationSource, rootPath, name, moduleType);
+            var modulePath = MDOPathUtils.getModulePath(configurationSource, rootPath, name, moduleType);
             if (modulePath != null && modulePath.toFile().exists()) {
               modulesByType.put(modulePath.toUri(), moduleType);
             }
@@ -452,7 +232,7 @@ public class MDOUtils {
       return children;
     }
 
-    Path folder = getMDOTypeFolder(configurationSource, rootPath, type);
+    Path folder = MDOPathUtils.getMDOTypeFolder(configurationSource, rootPath, type);
     if (folder == null || !folder.toFile().exists()) {
       return children;
     }
@@ -491,7 +271,7 @@ public class MDOUtils {
   private List<String> getChildrenNamesInFolder(ConfigurationSource configurationSource, Path folder) {
     List<String> childrenNames;
     int maxDepth = 1;
-    AtomicReference<String> extension = new AtomicReference<>(mdoExtension(configurationSource, true));
+    AtomicReference<String> extension = new AtomicReference<>(MDOPathUtils.mdoExtension(configurationSource, true));
     if (configurationSource == ConfigurationSource.EDT) {
       maxDepth = 2;
     }
@@ -540,7 +320,7 @@ public class MDOUtils {
     if (mdo.getForms() != null) {
       mdo.getForms().forEach(form -> {
         Map<URI, ModuleType> modulesByType = new HashMap<>();
-        var modulePath = getModulePath(configurationSource, formFolder, form.getName(), ModuleType.FormModule);
+        var modulePath = MDOPathUtils.getModulePath(configurationSource, formFolder, form.getName(), ModuleType.FormModule);
         if (modulePath != null && modulePath.toFile().exists()) {
           modulesByType.put(modulePath.toUri(), ModuleType.FormModule);
         }
@@ -559,7 +339,7 @@ public class MDOUtils {
     List<Path> childrenNames = new ArrayList<>();
     if (folder.toFile().exists()) {
       int maxDepth = 1;
-      AtomicReference<String> extension = new AtomicReference<>(mdoExtension(configurationSource, true));
+      AtomicReference<String> extension = new AtomicReference<>(MDOPathUtils.mdoExtension(configurationSource, true));
       if (configurationSource == ConfigurationSource.EDT) {
         maxDepth = 2;
       }
@@ -572,93 +352,6 @@ public class MDOUtils {
     }
 
     return childrenNames;
-  }
-
-  private static Map<MDOType, Set<ModuleType>> moduleTypesForMDOTypes() {
-    Map<MDOType, Set<ModuleType>> result = new HashMap<>();
-
-    for (MDOType mdoType : MDOType.values()) {
-      Set<ModuleType> types = new HashSet<>();
-      switch (mdoType) {
-        case ACCOUNTING_REGISTER:
-        case ACCUMULATION_REGISTER:
-        case CALCULATION_REGISTER:
-        case INFORMATION_REGISTER:
-          types.add(ModuleType.ManagerModule);
-          types.add(ModuleType.RecordSetModule);
-          break;
-        case BUSINESS_PROCESS:
-        case CATALOG:
-        case CHART_OF_ACCOUNTS:
-        case CHART_OF_CALCULATION_TYPES:
-        case CHART_OF_CHARACTERISTIC_TYPES:
-        case DATA_PROCESSOR:
-        case DOCUMENT:
-        case EXCHANGE_PLAN:
-        case REPORT:
-        case TASK:
-          types.add(ModuleType.ManagerModule);
-          types.add(ModuleType.ObjectModule);
-          break;
-        case COMMAND_GROUP:
-        case COMMON_ATTRIBUTE:
-        case COMMON_PICTURE:
-        case COMMON_TEMPLATE:
-        case DEFINED_TYPE:
-        case DOCUMENT_NUMERATOR:
-        case EVENT_SUBSCRIPTION:
-        case FUNCTIONAL_OPTION:
-        case ROLE:
-        case SCHEDULED_JOB:
-        case SESSION_PARAMETER:
-        case STYLE_ITEM:
-        case STYLE:
-        case SUBSYSTEM:
-        case WS_REFERENCE:
-        case XDTO_PACKAGE:
-          break;
-        case COMMON_COMMAND:
-          types.add(ModuleType.CommandModule);
-          break;
-        case COMMON_FORM:
-          types.add(ModuleType.FormModule);
-          break;
-        case COMMON_MODULE:
-          types.add(ModuleType.CommonModule);
-          break;
-        case CONFIGURATION:
-          types.add(ModuleType.ApplicationModule);
-          types.add(ModuleType.SessionModule);
-          types.add(ModuleType.ExternalConnectionModule);
-          types.add(ModuleType.ManagedApplicationModule);
-          types.add(ModuleType.OrdinaryApplicationModule);
-          break;
-        case CONSTANT:
-          types.add(ModuleType.ValueManagerModule);
-          break;
-        case DOCUMENT_JOURNAL:
-        case ENUM:
-        case FILTER_CRITERION:
-        case SETTINGS_STORAGE:
-          types.add(ModuleType.ManagerModule);
-          break;
-        case HTTP_SERVICE:
-          types.add(ModuleType.HTTPServiceModule);
-          break;
-        case SEQUENCE:
-          types.add(ModuleType.RecordSetModule);
-          break;
-        case WEB_SERVICE:
-          types.add(ModuleType.WEBServiceModule);
-          break;
-        default:
-          // non
-      }
-
-      result.put(mdoType, types);
-    }
-
-    return result;
   }
 
 }
