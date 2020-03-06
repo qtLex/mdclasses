@@ -135,14 +135,13 @@ public class MDOPathUtils {
    * Возвращает путь к файлу описания поддержки
    */
   public static Path getParentConfigurationsPath(ConfigurationSource configurationSource, Path rootPath) {
-    if (configurationSource == ConfigurationSource.EDT
-      || configurationSource == ConfigurationSource.DESIGNER) {
-      var path = getMDOTypeFolder(configurationSource, rootPath, MDOType.CONFIGURATION);
-      if (path != null) {
-        return Paths.get(path.toString(), "ParentConfigurations.bin");
-      }
+    if (configurationSource == ConfigurationSource.EDT) {
+      return Paths.get(rootPath.toString(), "src", "Configuration", "ParentConfigurations.bin");
+    } else if (configurationSource == ConfigurationSource.DESIGNER) {
+      return Paths.get(rootPath.toString(), "Ext", "ParentConfigurations.bin");
+    } else {
+      return null;
     }
-    return null;
   }
 
   /**

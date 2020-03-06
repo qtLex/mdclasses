@@ -30,7 +30,7 @@ public class Common {
     var fileParentConfiguration = MDOPathUtils.getParentConfigurationsPath(
       configuration.getConfigurationSource(), configuration.getRootPath());
 
-    if (fileParentConfiguration == null || fileParentConfiguration.toFile().exists()) {
+    if (fileParentConfiguration == null || !fileParentConfiguration.toFile().exists()) {
       return modulesBySupport;
     }
 
