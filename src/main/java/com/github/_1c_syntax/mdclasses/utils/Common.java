@@ -72,7 +72,7 @@ public class Common {
 
     Map<SupportConfiguration, SupportVariant> moduleSupport = Collections.emptyMap();
     if (mdObject.getUuid() == null) {
-      LOGGER.info("Не удалось найти идентфикатор по объекту " + mdObject);
+      LOGGER.info("Не удалось найти идентификатор по объекту " + mdObject);
     } else {
       moduleSupport = supportMap.getOrDefault(mdObject.getUuid(), Collections.emptyMap());
     }
