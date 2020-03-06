@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.ReturnValueReuse;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -30,6 +31,10 @@ public class CommonModule extends MDObjectBase {
   @Builder.Default
   protected ReturnValueReuse returnValuesReuse = ReturnValueReuse.DONT_USE;
   protected boolean privileged;
+
+  public MDOType getType() {
+    return MDOType.COMMON_MODULE;
+  }
 
   @JsonPOJOBuilder(withPrefix = "")
   @JsonIgnoreProperties(ignoreUnknown = true)

@@ -1,5 +1,11 @@
 package com.github._1c_syntax.mdclasses.metadata.additional;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum MDOType {
   ACCOUNTING_REGISTER("AccountingRegister", "AccountingRegisters", true, true),
   ACCUMULATION_REGISTER("AccumulationRegister", "AccumulationRegisters", true, true),
@@ -32,7 +38,7 @@ public enum MDOType {
   HTTP_SERVICE("HTTPService", "HTTPServices", false, false),
   INFORMATION_REGISTER("InformationRegister", "InformationRegisters", true, true),
   INTERFACE("Interface", "Interfaces", true, true),
-  LANGUAGES("Language", "Languages", false, false),
+  LANGUAGE("Language", "Languages", false, false),
   REPORT("Report", "Reports", true, true),
   ROLE("Role", "Roles", false, false),
   SCHEDULED_JOB("ScheduledJob", "ScheduledJobs", false, false),
@@ -45,7 +51,11 @@ public enum MDOType {
   TASK("Task", "Tasks", true, true),
   WEB_SERVICE("WebService", "WebServices", false, false),
   WS_REFERENCE("WSReference", "WSReferences", false, false),
-  XDTO_PACKAGE("XDTOPackage", "XDTOPackages", false, false);
+  XDTO_PACKAGE("XDTOPackage", "XDTOPackages", false, false),
+
+  FORM("Form", "Forms", false, false)
+
+  ;
 
   private String shortClassName;
   private String groupName;
@@ -66,6 +76,13 @@ public enum MDOType {
       return "MDO" + shortClassName;
     }
     return shortClassName;
+  }
+
+  public static List<MDOType> values(boolean withoutChildren) {
+    if(withoutChildren) {
+      return Arrays.stream(values()).filter(mdoType -> mdoType != FORM).collect(Collectors.toList());
+    }
+    return Arrays.asList(values());
   }
 
   public String getGroupName() {

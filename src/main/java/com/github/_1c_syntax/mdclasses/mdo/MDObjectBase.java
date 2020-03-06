@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import com.github._1c_syntax.mdclasses.metadata.additional.ModuleType;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,28 @@ public class MDObjectBase {
   protected Map<URI, ModuleType> modulesByType;
 
   protected List<Form> forms;
+
+  public MDOType getType() {
+    return MDOType.CONFIGURATION;
+  }
+
+  public void setMdoURI(URI uri) {
+    if (this.mdoURI == null) {
+      this.mdoURI = uri;
+    }
+  }
+
+  public void setModulesByType(Map<URI, ModuleType> modulesByType) {
+    if (this.modulesByType == null) {
+      this.modulesByType = modulesByType;
+    }
+  }
+
+  public void setForms(List<Form> forms) {
+    if (this.forms == null) {
+      this.forms = forms;
+    }
+  }
 
   public abstract static class MDObjectBaseBuilder
     <C extends MDObjectBase, B extends MDObjectBase.MDObjectBaseBuilder<C, B>> {
@@ -61,25 +84,6 @@ public class MDObjectBase {
       return this.self();
     }
 
-  }
-
-  public void setMdoURI(URI uri) {
-    if (this.mdoURI == null) {
-      this.mdoURI = uri;
-    }
-  }
-
-  public void setModulesByType(Map<URI, ModuleType> modulesByType) {
-    if (this.modulesByType == null) {
-      this.modulesByType = modulesByType;
-      // todo реализовать заполнение для форм
-    }
-  }
-
-  public void setForms(List<Form> forms) {
-    if (this.forms == null) {
-      this.forms = forms;
-    }
   }
 
   // Mark builder implementation as Jackson JSON builder with methods w/o `with-` in their names.

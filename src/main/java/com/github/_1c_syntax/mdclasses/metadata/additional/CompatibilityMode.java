@@ -37,7 +37,7 @@ public class CompatibilityMode {
   public static int compareTo(CompatibilityMode versionA, CompatibilityMode versionB) {
     if (versionA.major == versionB.major) {
       if (versionA.minor == versionB.minor) {
-        if (versionA.version != versionB.version) {
+        if (versionA.version == versionB.version) {
           return 0;
         } else {
           return compareToPart(versionA.version, versionB.version);

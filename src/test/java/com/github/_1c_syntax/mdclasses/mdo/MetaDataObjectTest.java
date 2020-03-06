@@ -547,7 +547,7 @@ class MetaDataObjectTest {
     assertThat(mdo.getUuid()).isEqualTo("b8a93cce-56e4-4507-b281-5c525a466a0f");
 
     // only designer
-    mdo = MDOUtils.getMDObject(ConfigurationSource.DESIGNER, MDOType.LANGUAGES, getMDOPathDesigner("Languages/Русский.xml"));
+    mdo = MDOUtils.getMDObject(ConfigurationSource.DESIGNER, MDOType.LANGUAGE, getMDOPathDesigner("Languages/Русский.xml"));
     assertThat(mdo).isNotNull();
     assertThat(mdo instanceof Language).isTrue();
     assertThat(mdo.getName()).isEqualTo("Русский");

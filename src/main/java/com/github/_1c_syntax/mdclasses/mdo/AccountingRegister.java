@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.github._1c_syntax.mdclasses.metadata.additional.MDOType;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
@@ -16,10 +17,13 @@ import java.util.Map;
 @SuperBuilder
 public class AccountingRegister extends MDObjectBase {
 
+  public MDOType getType() {
+    return MDOType.ACCOUNTING_REGISTER;
+  }
+
   @JsonPOJOBuilder(withPrefix = "")
   @JsonIgnoreProperties(ignoreUnknown = true)
   static final class AccountingRegisterBuilderImpl extends AccountingRegister.AccountingRegisterBuilder<AccountingRegister, AccountingRegister.AccountingRegisterBuilderImpl> {
-
     @JsonProperty("Properties")
     @Override
     public AccountingRegister.AccountingRegisterBuilderImpl properties(Map<String, Object> properties) {
@@ -27,4 +31,5 @@ public class AccountingRegister extends MDObjectBase {
       return this.self();
     }
   }
+
 }

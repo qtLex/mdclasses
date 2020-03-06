@@ -109,7 +109,7 @@ public class MDOUtils {
         mdoPath,
         mdoFolder,
         type));
-      updateMDOForms(configurationSource, mdo, type, mdoFolder);
+      updateMDOForms(configurationSource, mdo, mdoFolder);
     }
 
     return mdo;
@@ -154,7 +154,7 @@ public class MDOUtils {
 
     Map<URI, ModuleType> modulesByType = new HashMap<>();
 
-    for (MDOType mdoType : MDOType.values()) {
+    for (MDOType mdoType : MDOType.values(true)) {
       var folder = MDOPathUtils.getMDOTypeFolder(configurationSource, rootPath, mdoType);
       if (folder == null || !folder.toFile().exists()) {
         continue;
@@ -206,7 +206,7 @@ public class MDOUtils {
                                                              Path folder,
                                                              String name) {
     return getChildrenMDOModuleTypes(configurationSource,
-      Paths.get(folder.toString(), name, "Forms"),
+      Paths.get(folder.toString(), name, MDOType.FORM.getGroupName()),
       ModuleType.FormModule);
   }
 
@@ -258,7 +258,7 @@ public class MDOUtils {
       return allChildren;
     }
 
-    for (MDOType type : MDOType.values()) {
+    for (MDOType type : MDOType.values(true)) {
       if (!includeConfiguration && type == MDOType.CONFIGURATION) {
         continue;
       }
@@ -287,11 +287,11 @@ public class MDOUtils {
     return childrenNames;
   }
 
-  private void updateMDOForms(ConfigurationSource configurationSource, MDObjectBase mdo, MDOType type, Path folder) {
-    if (!type.isMayHaveForm() || folder == null) {
+  private void updateMDOForms(ConfigurationSource configurationSource, MDObjectBase mdo, Path folder) {
+    if (!mdo.getType().isMayHaveForm() || folder == null) {
       return;
     }
-    var formFolder = Paths.get(folder.toString(), mdo.getName(), "Forms");
+    var formFolder = Paths.get(folder.toString(), mdo.getName(), MDOType.FORM.getGroupName());
     if (!formFolder.toFile().exists()) {
       return;
     }
