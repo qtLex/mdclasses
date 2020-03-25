@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class DataProcessor extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.DATA_PROCESSOR;
+  static {
+    type = MDOType.DATA_PROCESSOR;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

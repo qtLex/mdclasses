@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class FilterCriterion extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.FILTER_CRITERION;
+  static {
+    type = MDOType.FILTER_CRITERION;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Sequence extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.SEQUENCE;
+  static {
+    type = MDOType.SEQUENCE;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

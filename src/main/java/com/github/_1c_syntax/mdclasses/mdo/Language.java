@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Language extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.LANGUAGE;
+  static {
+    type = MDOType.LANGUAGE;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

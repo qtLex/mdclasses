@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class MDOInterface extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.INTERFACE;
+  static {
+    type = MDOType.INTERFACE;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

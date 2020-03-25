@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CommandGroup extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.COMMAND_GROUP;
+  static {
+    type = MDOType.COMMAND_GROUP;
   }
 
   @JsonPOJOBuilder(withPrefix = "")

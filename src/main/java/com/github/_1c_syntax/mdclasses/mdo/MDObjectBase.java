@@ -45,6 +45,8 @@ public class MDObjectBase {
   protected List<Form> forms;
   protected List<Command> commands;
 
+  protected static MDOType type = null;
+
   public abstract static class MDObjectBaseBuilder
     <C extends MDObjectBase, B extends MDObjectBase.MDObjectBaseBuilder<C, B>> {
 
@@ -141,8 +143,8 @@ public class MDObjectBase {
 
   }
 
-  public MDOType getType() {
-    return MDOType.CONFIGURATION;
+  public static MDOType getType() {
+    return type;
   }
 
   public void setMdoURI(URI uri) {

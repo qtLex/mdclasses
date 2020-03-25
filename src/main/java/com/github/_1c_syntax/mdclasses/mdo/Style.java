@@ -14,8 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Style extends MDObjectBase {
 
-  public MDOType getType() {
-    return MDOType.STYLE;
+  static {
+    type = MDOType.STYLE;
   }
 
   @JsonPOJOBuilder(withPrefix = "")
